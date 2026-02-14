@@ -3,6 +3,9 @@
 
 # Beyond VLM-Based Rewards: Diffusion-Native Latent Reward Modeling
 
+[![arXiv](https://img.shields.io/badge/arXiv-2602.11146-b31b1b.svg)](https://arxiv.org/abs/2602.11146)
+[![GitHub](https://img.shields.io/badge/GitHub-Code-blue?logo=github)](https://github.com/HKUST-C4G/diffusion-rm)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-orange)](https://huggingface.co/liuhuohuo/DiNa-LRM-SD35M-12layers)
 </div>
 
 <div align="center" style="font-family: charter;">
@@ -113,7 +116,7 @@ prompt = "A girl walking in the street"
 with torch.no_grad():
     # Helper to get embeddings
     prompt_embeds, pooled_embeds = compute_text_embedding(text_encoders, tokenizers, [prompt], )
-s
+
     output = pipe(prompt_embeds=prompt_embeds, pooled_prompt_embeds=pooled_prompt_embeds, num_inference_steps=40, guidance_scale=4.5, output_type='latent')
     latents = output.images
     

@@ -27,7 +27,6 @@ model:
     num_queries: 4
     num_attn_heads: 8
     dropout: 0.0
-    use_proj_in: False
 
 
 # Training configuration
