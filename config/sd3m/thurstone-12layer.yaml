@@ -1,0 +1,86 @@
+# Model configuration
+model:
+  model_type: "thurstone"
+  backbone_model_id: "stabilityai/stable-diffusion-3.5-medium"
+  num_transformer_layers: 12
+  freeze_backbone: false
+
+  use_ema: true
+  ema_decay: 0.995
+
+  use_lora: true
+  use_text_features: true
+  lora_config:
+    r: 64
+    lora_alpha: 128
+    init_lora_weights: "gaussian"
+  
+  # Reward head configuration
+  use_logistic: false
+  visual_head_idx: [4, 8, 12]
+  text_head_idx: [4, 8, 12]
+  use_t_embed: true
+  reward_head:
+    use_proj_in: False
+    width: -1
+    out_dim: 1
+    num_queries: 4
+    num_attn_heads: 8
+    dropout: 0.0
+    use_proj_in: False
+
+
+# Training configuration
+training:
+  mixed_precision: "bf16"  # Options: "fp32", "bf16", "fp16"
+  gradient_accumulation_steps: 1
+  num_epochs: 1
+  uncond_prob: 0.0  # deprecated, i found cfg cannot benefit
+  learning_rate: 5e-5
+  weight_decay: 0.01
+  warmup_steps: 1000
+  # lr_scheduler: "cosine"
+  lr_scheduler: "constant"
+
+  max_grad_norm: 1.0
+
+  t_weighting_scheme: "uniform"
+  t_weighting_scheme_param: 0.0
+  
+  use_vae: false
+
+  add_noise: true
+
+  
+# Data configuration
+data:
+  train:
+    parquet_files: "/path/to/preprocess_data/sd35m/part_rank*.parquet"
+    bucket_file: "/path/to/preprocess_data/sd35m/bucket_index.csv"
+    base_batch_size: 4
+    reference_size: 1024
+    num_workers: 8
+    shuffle: true
+    seed: 42
+    use_dynamic_bsz: false
+  eval:
+    hpdv3:
+      parquet_files: "/path/to/preprocess_data/sd35m-test/sample_1000.parquet"
+      batch_size: 1
+      num_workers: 0
+      shuffle: false
+
+
+# Paths
+paths:
+  run_name: "SD35M-Thurstone-12layers"
+  save_dir: "outputs"
+
+# Logging
+logging:
+  eval_frac: 1000
+  save_frac: 2000
+  
+# System
+system:
+  seed: 42
