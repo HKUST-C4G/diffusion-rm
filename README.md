@@ -29,21 +29,7 @@
 > *a diffusion-native latent reward model, competitive reward accuracy, much cheaper for alignment*
 
 
-### Method
-
-<div align="center">
-    <img src="assets/method.png" width="800">
-</div>
-
----
-
-### Alignment Performance
-
-<div align="center">
-    <img src="assets/alignment_performance.png" width="800">
-</div>
-
-🗺️ Open-source Roadmap：
+## 🗺️ Open-source Roadmap：
 
 
 - [x] Training and Inference source code, and pre-trained checkpoints for SD3.5-Medium.
@@ -71,8 +57,8 @@ cd ../
 # This will install all necessary dependencies
 pip install -e .
 ```
---
-## 🚀 Inference & Testing
+
+## ⚡ Inference & Testing
 
 We provide two primary methods to evaluate images using DiNa-LRM. You can either score images generated on-the-fly or score existing image files from your local disk.
 
@@ -247,6 +233,10 @@ print(f"Local Image Score: {score.item()}")
 
 ## 🛠️ Reward Model Training
 
+<div align="center">
+    <img src="assets/method.png" width="800">
+</div>
+
 To train the reward model, follow these steps:
 
 1. **Data Preparation**: To avoid extra computational overhead during training, we preprocess the pixel-domain training data by encoding it into the latent space using the VAE. 
@@ -259,7 +249,12 @@ To train the reward model, follow these steps:
    ```
 
 
-## 🛠️ Alignment Stage Training
+## 🚀 Alignment Stage Training
+
+
+<div align="center">
+    <img src="assets/alignment_performance.png" width="800">
+</div>
 
 We provide reward model implementations based on DiNa-LRM (see `flow-grpo-rm/flow_grpo/rewards.py:diffusion_rm_score`) and include training examples for both ReFL and Flow-GRPO alignment:
 
@@ -272,7 +267,7 @@ We provide reward model implementations based on DiNa-LRM (see `flow-grpo-rm/flo
 bash flow-grpo-rm/scripts/single_node/refl_rm.sh
 ```
 
-*Note: ReFL is prone to reward hacking. To mitigate this, we recommend either 1) adding a pretrained loss (can be adjusted in the config), or 2) applying early stopping, as reward hacking is typically not obvious within the first 150 steps.*
+*Note: ReFL is prone to reward hacking. To mitigate this, we recommend either 1) adding a pretrained loss (can be adjusted in the config directly), or 2) applying early stopping, as reward hacking is typically not obvious within the first 150 steps.*
 
 **For Flow-GRPO Training:**
 
