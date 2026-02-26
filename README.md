@@ -36,7 +36,7 @@
 - [x] Release of the preprocessed training dataset and training guidance.
 - [x] Training code for alignment stage.
 - [x] Support for additional backbones (e.g., Flux, Z-image-turbo).
-- [] Evaluation code & logistic normalization.
+- [ ] Evaluation code & logistic normalization.
 
 
 ## ⚙️ Installation
