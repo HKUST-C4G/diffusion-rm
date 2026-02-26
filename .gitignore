@@ -17,7 +17,6 @@ ge_check_op.json
 
 eval_results/
 eval_data/
-tools/
 
 out*
 
@@ -25,3 +24,5 @@ out*
 
 *.csv
 *.pyc
+
+.DS_Store
