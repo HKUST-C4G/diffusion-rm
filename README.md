@@ -278,6 +278,10 @@ bash flow-grpo-rm/scripts/single_node/grpo_rm.sh
 *Note: Our model tends to favor image quality. To better balance semantic alignment, we recommend mixing it with other advantages (e.g., PickScore). This usually leads to better optimization performance.*
 
 
+## 📧 Contact
+
+If you have any question, please reach out to me at `gongyeliuu@gmail.com`.
+
 
 ## 🎓 Citation
 
