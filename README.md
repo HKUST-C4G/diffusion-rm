@@ -28,19 +28,29 @@
 
 > *a diffusion-native latent reward model, competitive reward accuracy, much cheaper for alignment*
 
-## 🧧 Happy Chinese New Year! 
 
-We are actively preparing the repository for public release. The full codebase and pre-trained models will be open-sourced in a few weeks. Stay tuned! 🚀
+### Method
 
+<div align="center">
+    <img src="assets/method.png" width="800">
+</div>
+
+---
+
+### Alignment Performance
+
+<div align="center">
+    <img src="assets/alignment_performance.png" width="800">
+</div>
 
 🗺️ Open-source Roadmap：
 
 
 - [x] Training and Inference source code, and pre-trained checkpoints for SD3.5-Medium.
-- [ ] Release of the preprocessed training dataset and training guidance.
-- [ ] Evaluation code & logistic normalization.
-- [ ] Training code for alignment stage.
-- [ ] Support for additional backbones (e.g., Flux, Z-image-turbo).
+- [x] Release of the preprocessed training dataset and training guidance.
+- [x] Training code for alignment stage.
+- [x] Support for additional backbones (e.g., Flux, Z-image-turbo).
+- [] Evaluation code & logistic normalization.
 
 
 ## ⚙️ Installation
@@ -52,8 +62,13 @@ To set up the environment, we recommend using Conda to manage dependencies. Foll
 conda create -n diffusion-rm python=3.10 -y
 conda activate diffusion-rm
 
-# 2. Install the package in editable mode
-# This will install all necessary dependencies including torch and diffusers
+# 2. (Optional) For Flow-GRPO training support
+cd flow-grpo-rm
+pip install -e .
+cd ../
+
+# 3. Install the package
+# This will install all necessary dependencies
 pip install -e .
 ```
 --
@@ -230,25 +245,57 @@ print(f"Local Image Score: {score.item()}")
 
 
 
-## 🛠️ Training
+## 🛠️ Reward Model Training
 
-preparing....
+To train the reward model, follow these steps:
+
+1. **Data Preparation**: To avoid extra computational overhead during training, we preprocess the pixel-domain training data by encoding it into the latent space using the VAE. 
+   - We provide the preprocessed dataset here: [DiNa-LRM-SD35m-HPSv3-Preprocess-Data](https://huggingface.co/datasets/liuhuohuo/DiNa-LRM-SD35m-HPSv3-Preprocess-Data).
+   - Alternatively, you can preprocess the data manually by following the instructions in [`tools/data_process/README.md`](tools/data_process/README.md).
+2. **Configuration**: Adjust your training config file, ensuring all data paths are set correctly.
+3. **Start Training**: Launch the single-node training script:
+   ```bash
+   bash scripts/run/single_node/task_train.sh
+   ```
 
 
-### Method
+## 🛠️ Alignment Stage Training
 
-<div align="center">
-    <img src="assets/method.png" width="800">
-</div>
+We provide reward model implementations based on DiNa-LRM (see `flow-grpo-rm/flow_grpo/rewards.py:diffusion_rm_score`) and include training examples for both ReFL and Flow-GRPO alignment:
 
----
+* **ReFL**: `flow-grpo-rm/scripts/train_sd3_refl_rm.py`
+* **Flow-GRPO**: `flow-grpo-rm/scripts/train_sd3_fast_rm.py`
 
-### Alignment Performance
+**For ReFL Training:**
 
-<div align="center">
-    <img src="assets/alignment_performance.png" width="800">
-</div>
+```bash
+bash flow-grpo-rm/scripts/single_node/refl_rm.sh
+```
 
----
+*Note: ReFL is prone to reward hacking. To mitigate this, we recommend either 1) adding a pretrained loss (can be adjusted in the config), or 2) applying early stopping, as reward hacking is typically not obvious within the first 150 steps.*
+
+**For Flow-GRPO Training:**
+
+```bash
+bash flow-grpo-rm/scripts/single_node/grpo_rm.sh
+```
+
+*Note: Our model tends to favor image quality. To better balance semantic alignment, we recommend mixing it with other advantages (e.g., PickScore). This usually leads to better optimization performance.*
+
+
+
+## 🎓 Citation
+
+If you find this work helpful, please consider citing:
+
+```bibtex
+@article{liu2026beyond,
+  title={Beyond VLM-Based Rewards: Diffusion-Native Latent Reward Modeling},
+  author={Liu, Gongye and Yang, Bo and Zhi, Yida and Zhong, Zhizhou and Ke, Lei and Deng, Didan and Gao, Han and Huang, Yongxiang and Zhang, Kaihao and Fu, Hongbo and others},
+  journal={arXiv preprint arXiv:2602.11146},
+  year={2026}
+}
+
+```
 
 ---
