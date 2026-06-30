@@ -36,6 +36,7 @@
 - [x] Release of the preprocessed training dataset and training guidance.
 - [x] Training code for alignment stage.
 - [x] Support for additional backbones (e.g., Flux, Z-image-turbo).
+- [x] Support [MindSpore](https://github.com/mindspore-ai/mindspore) + Ascend training and inference via the [`mindspore`](https://github.com/HKUST-C4G/diffusion-rm/tree/mindspore) branch, with the SD3 reward head checkpoint available [here](https://drive.google.com/file/d/1jNuhGNksemVJO59NhU0NFCdDRKhzEdu2/view?usp=sharing).
 - [ ] Evaluation code & logistic normalization.
 
 
