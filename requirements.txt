@@ -1,0 +1,7 @@
+mindspore
+mindone
+numpy
+pillow
+tqdm
+accelerate
+pyyaml

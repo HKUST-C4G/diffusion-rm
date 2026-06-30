@@ -1,0 +1,33 @@
+# Diffusion-RM Scorer 配置示例
+
+diffusion_rm_scorer_configs:
+  # FLUX Diffusion-RM 配置
+  diffusion-rm-flux:
+    checkpoint_path: "/path/to/Diffusion-RM/outputs/[NODE-00 HPDv3]-base-update-(12layer)-(both_token)-(4,8,12)-(4,8,12)-(2d_head_1layer)-(constant_t_0.99)-(3e-5lr)-(32bs)-(3epoch)-bf16_2025.10.28_21.32.33/checkpoints/step_15000"
+    config_path: "/path/to/Diffusion-RM/outputs/[NODE-00 HPDv3]-base-update-(12layer)-(both_token)-(4,8,12)-(4,8,12)-(2d_head_1layer)-(constant_t_0.99)-(3e-5lr)-(32bs)-(3epoch)-bf16_2025.10.28_21.32.33/config.json"
+    pipeline_path: "black-forest-labs/FLUX.1-dev"
+    device: "cuda"
+    u: 0.9
+
+  # SD3 Diffusion-RM 配置
+  diffusion-rm-sd3:
+    checkpoint_path: "/path/to/Diffusion-RM/outputs/SD3-.../checkpoints/step_10000"
+    config_path: "/path/to/Diffusion-RM/outputs/SD3-.../config.json"
+    pipeline_path: "stabilityai/stable-diffusion-3.5-medium"
+    device: "cuda"
+    u: 0.9
+
+# MultiScorer 权重配置示例
+multi_scorer_weights:
+  # 只使用 Diffusion-RM
+  only_flux_rm:
+    diffusion-rm-flux: 1.0
+
+  # 仅使用 SD3 Diffusion-RM
+  only_sd3_rm:
+    diffusion-rm-sd3: 1.0
+
+  # 同时使用 FLUX 和 SD3 Diffusion-RM
+  both_diffusion_rm:
+    diffusion-rm-flux: 0.5
+    diffusion-rm-sd3: 0.5
